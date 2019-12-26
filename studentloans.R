@@ -52,7 +52,7 @@ loans %>%
 
 
 #plot 1 without log transformation
-notrans <- payment.summary %>% 
+loan1 <- payment.summary %>% 
   pivot_longer(starts_with("Total"), names_to = "status", values_to = "totals")  %>% 
   mutate(label = if_else(year == max(year), as.character(status), NA_character_)) %>% 
   ggplot(mapping = aes(year, totals, col=status)) +
@@ -68,7 +68,7 @@ notrans <- payment.summary %>%
         plot.title =element_text(size = 14, face="bold") ) 
 
 #with log trans
-logtrans  <-payment.summary %>% 
+loan2 <-payment.summary %>% 
   pivot_longer(starts_with("Total"), names_to = "status", values_to = "totals")  %>% 
   mutate(label = if_else(year == max(year), as.character(status), NA_character_)) %>% 
   ggplot(mapping = aes(year, totals, col=status)) +
@@ -86,14 +86,14 @@ logtrans  <-payment.summary %>%
       plot.caption = element_text( size=10, color = "grey40"),
         plot.title =element_text(size = 14, face="bold") ) 
 
-grid.arrange(notrans, logtrans, ncol=2)
+grid.arrange(loan1, loan2, ncol=2)
 
 
 
 #payment methods preferred/seen mostly
 
 
-paynotrans <- payment.summary %>% 
+payment1 <- payment.summary %>% 
   pivot_longer(ends_with("pay"), names_to = "Method", values_to = "Payment")   %>% 
   mutate(label = if_else(year == max(year), as.character(Method), NA_character_)) %>% 
   ggplot(mapping = aes(year, Payment, col=Method)) +
@@ -109,7 +109,7 @@ paynotrans <- payment.summary %>%
         plot.title =element_text(size = 14, face="bold") ) 
 
 
-paylogtrans <- payment.summary %>% 
+payment2 <- payment.summary %>% 
   pivot_longer(ends_with("pay"), names_to = "Method", values_to = "Payment")   %>% 
   mutate(label = if_else(year == max(year), as.character(Method), NA_character_)) %>% 
   ggplot(mapping = aes(year, Payment, col=Method)) +
@@ -125,7 +125,7 @@ paylogtrans <- payment.summary %>%
         plot.caption = element_text( size=10, color = "grey40"),
         plot.title =element_text(size = 14, face="bold") ) 
 
-grid.arrange(paynotrans, paylogtrans, ncol=2)
+grid.arrange(payment1, payment2, ncol=2)
 
 
 #Names of agency loaning much and not receiving back
